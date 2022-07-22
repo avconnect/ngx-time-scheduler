@@ -1,0 +1,1 @@
+export * from './dist/ngx-time-scheduler';
