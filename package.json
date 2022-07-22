@@ -19,8 +19,8 @@
     "npm_pack": "cd dist/ngx-time-scheduler && npm pack",
     "package": "npm run build_lib && npm run copy_files && npm run npm_pack",
     "publish": "cd dist/ngx-time-scheduler && npm publish",
-    "prepare": "npm run build_lib && npm run copy_files && npm run remove_files",
-    "remove_files": "rm LICENSE && rm package.json && rm README.md && rm -r node_modules"
+    "prepare": "npm run build_lib && npm run flat_dist",
+    "flat_dist": "cp -a /dist/ngx-time-scheduler. /"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
