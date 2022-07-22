@@ -17,7 +17,8 @@
     "copy_files": "npm run copy_license && npm run copy_readme",
     "npm_pack": "cd dist/ngx-time-scheduler && npm pack",
     "package": "npm run build_lib && npm run copy_files && npm run npm_pack",
-    "publish": "cd dist/ngx-time-scheduler && npm publish"
+    "publish": "cd dist/ngx-time-scheduler && npm publish",
+    "prepare": "npm run build"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
