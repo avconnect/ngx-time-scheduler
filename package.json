@@ -1,7 +1,6 @@
 {
   "name": "ngx-time-scheduler",
   "version": "1.7.1",
-  "files": ["dist/*.js", "dist/**/*.js", "dist/*.ts", "dist/**/*.ts"],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
