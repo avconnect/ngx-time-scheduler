@@ -20,7 +20,7 @@
     "package": "npm run build_lib && npm run copy_files && npm run npm_pack",
     "publish": "cd dist/ngx-time-scheduler && npm publish",
     "prepare": "npm run build_lib && npm run copy_files",
-    "remove_files": "rm LICENSE && rm package.json && rm README.md && rm node_modules"
+    "remove_files": "rm LICENSE && rm package.json && rm README.md && rm -r node_modules"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
