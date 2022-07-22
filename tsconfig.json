@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "downlevelIteration": true,
-    "outDir": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "module": "esnext",
@@ -21,10 +21,10 @@
     ],
     "paths": {
       "ngx-time-scheduler": [
-        ""
+        "dist/ngx-time-scheduler"
       ],
       "ngx-time-scheduler/*": [
-        ""
+        "dist/ngx-time-scheduler/*"
       ]
     }
   }
