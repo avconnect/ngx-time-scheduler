@@ -21,7 +21,7 @@
     "publish": "cd dist/ngx-time-scheduler && npm publish",
     "prepare": "npm run build_lib",
     "postprepare": "npm run flat_dist",
-    "flat_dist": "cp -a ./dist/ngx-time-scheduler. ./"
+    "flat_dist": "cp -a /dist/ngx-time-scheduler. ./"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
