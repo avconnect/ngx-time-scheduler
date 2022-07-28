@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ngcc",
+    "postinstall": "ngcc -s dist/ngx-time-scheduler --create-ivy-entry-points",
     "ng:build:demo": "ng build --aot --prod --base-href=https://abhishekjain12.github.io/ngx-time-scheduler/",
     "deploy": "npm run ng:build:demo && gh-pages -d dist/demo",
     "build_lib": "ng build NgxTimeScheduler --prod",
