@@ -1,7 +1,10 @@
 {
   "name": "ngx-time-scheduler",
   "version": "1.7.1",
-  "files": ["index.ts", "dist/ngx-time-scheduler"],
+  "files": [
+    "index.ts",
+    "dist/ngx-time-scheduler"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +12,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postprepare": "ngcc -s dist/ngx-time-scheduler --create-ivy-entry-points",
+    "postinstall": "ngcc && npm run build_lib && npm run copy_files",
     "ng:build:demo": "ng build --aot --prod --base-href=https://abhishekjain12.github.io/ngx-time-scheduler/",
     "deploy": "npm run ng:build:demo && gh-pages -d dist/demo",
     "build_lib": "ng build NgxTimeScheduler --prod",
@@ -19,7 +22,7 @@
     "npm_pack": "cd dist/ngx-time-scheduler && npm pack",
     "package": "npm run build_lib && npm run copy_files && npm run npm_pack",
     "publish": "cd dist/ngx-time-scheduler && npm publish",
-    "prepare": "npm run build_lib && npm run copy_files && ngcc -s dist/ngx-time-scheduler --create-ivy-entry-points"
+    "prepare": "ngcc -s dist/ngx-time-scheduler --create-ivy-entry-points"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
