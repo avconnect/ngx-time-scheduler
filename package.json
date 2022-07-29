@@ -12,17 +12,19 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ngcc && npm run build_lib && npm run copy_files",
+    "postinstall": "ngcc",
     "ng:build:demo": "ng build --aot --prod --base-href=https://abhishekjain12.github.io/ngx-time-scheduler/",
     "deploy": "npm run ng:build:demo && gh-pages -d dist/demo",
-    "build_lib": "ng build NgxTimeScheduler",
+    "build_lib": "ng build NgxTimeScheduler --prod",
     "copy_license": "cp ./LICENSE ./dist/ngx-time-scheduler",
     "copy_readme": "cp ./README.md ./dist/ngx-time-scheduler",
     "copy_files": "npm run copy_license && npm run copy_readme",
     "npm_pack": "cd dist/ngx-time-scheduler && npm pack",
     "package": "npm run build_lib && npm run copy_files && npm run npm_pack",
     "publish": "cd dist/ngx-time-scheduler && npm publish",
-    "prepare": "ngcc -s dist/ngx-time-scheduler --create-ivy-entry-points"
+    "prepare": "npm run export",
+    "export": "npm run build_lib && npm run copy_files",
+    "postexport": "ngcc -s dist/ngx-time-scheduler --create-ivy-entry-points"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
