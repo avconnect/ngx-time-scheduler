@@ -15,7 +15,7 @@
     "postinstall": "ngcc && npm run build_lib && npm run copy_files",
     "ng:build:demo": "ng build --aot --prod --base-href=https://abhishekjain12.github.io/ngx-time-scheduler/",
     "deploy": "npm run ng:build:demo && gh-pages -d dist/demo",
-    "build_lib": "ng build NgxTimeScheduler --prod",
+    "build_lib": "ng build NgxTimeScheduler",
     "copy_license": "cp ./LICENSE ./dist/ngx-time-scheduler",
     "copy_readme": "cp ./README.md ./dist/ngx-time-scheduler",
     "copy_files": "npm run copy_license && npm run copy_readme",
