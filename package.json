@@ -5,6 +5,11 @@
     "index.ts",
     "dist/ngx-time-scheduler"
   ],
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
