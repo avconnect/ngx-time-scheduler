@@ -3,7 +3,8 @@
   "version": "1.7.1",
   "files": [
     "index.ts",
-    "dist/ngx-time-scheduler"
+    "dist/ngx-time-scheduler",
+    "node_modules"
   ],
   "browser": {
     "fs": false,
