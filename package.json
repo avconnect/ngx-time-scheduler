@@ -6,11 +6,6 @@
     "dist/ngx-time-scheduler",
     "node_modules"
   ],
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
-  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

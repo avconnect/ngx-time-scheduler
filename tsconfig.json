@@ -20,9 +20,6 @@
       "dom"
     ],
     "paths": {
-      "@angular/*": [
-        "./node_modules/@angular/*"
-      ],
       "ngx-time-scheduler": [
         "dist/ngx-time-scheduler"
       ],
