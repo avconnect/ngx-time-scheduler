@@ -23,7 +23,8 @@
     "prepare": "npm run export",
     "export": "npm run build_lib && npm run copy_files",
     "preexport": "ngcc",
-    "postexport": "mv ./dist/ngx-time-scheduler/* ./ && rm -r ./dist"
+    "postexport": "mv ./dist/ngx-time-scheduler/* ./ && npm run remove_files",
+    "remove_files": "rm -r ./dist && rm -r e2e && rm -r projects && rm -r src && rm .editorconfig && rm angular.json && rm browserlist && rm tsconfig.json && rm tslint.json"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
