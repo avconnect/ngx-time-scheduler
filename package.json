@@ -23,7 +23,8 @@
     "publish": "cd dist/ngx-time-scheduler && npm publish",
     "prepare": "npm run export",
     "export": "npm run build_lib && npm run copy_files",
-    "preexport": "ngcc"
+    "preexport": "ngcc",
+    "postexport": "mv ./dist/ngx-time-scheduler/* ./ && rmdir ./dist"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
