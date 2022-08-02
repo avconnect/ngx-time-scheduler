@@ -24,7 +24,8 @@
     "publish": "cd dist/ngx-time-scheduler && npm publish",
     "prepare": "npm run export",
     "export": "npm run build_lib && npm run copy_files",
-    "postexport": "ngcc"
+    "preexport": "ngcc",
+    "postexport": "ngcc -s dist/ngx-time-scheduler --create-ivy-entry-points"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
