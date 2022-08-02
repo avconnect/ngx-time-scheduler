@@ -2,7 +2,6 @@
   "name": "ngx-time-scheduler",
   "version": "1.7.1",
   "files": [
-    "index.ts",
     "dist/ngx-time-scheduler"
   ],
   "scripts": {
