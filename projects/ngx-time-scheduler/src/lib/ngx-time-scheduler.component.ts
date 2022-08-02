@@ -345,6 +345,13 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     }));
   }
 
+  formatHeader() {
+    const start = this.start.locale(this.locale).format(this.headerFormat),
+      end = this.end.locale(this.locale).format(this.headerFormat);
+    if (start === end) return start;
+    return `${start} - ${end}`;
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
