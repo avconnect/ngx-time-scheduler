@@ -21,7 +21,7 @@
     "package": "npm run build_lib && npm run copy_files && npm run npm_pack",
     "publish": "cd dist/ngx-time-scheduler && npm publish",
     "prepare": "npm run export",
-    "export": "npm run build_lib && npm run copy_files",
+    "export": "npm run package",
     "preexport": "ngcc"
   },
   "publishConfig": {
