@@ -39,7 +39,7 @@ export class Text {
     this.PrevButton = 'Prev';
     this.TodayButton = 'Today';
     this.GotoButton = 'Go to';
-    this.SectionTitle = 'BUS';
+    this.SectionTitle = 'Section';
   }
 }
 
