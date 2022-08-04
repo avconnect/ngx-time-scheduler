@@ -33,7 +33,7 @@
     <table class="time-sch-table">
       <tr *ngFor="let timeFrameHeader of header; let i = index; trackBy: trackByFn">
 
-        <td class="time-sch-section text-center" *ngIf="i === 0" [rowSpan]="periods.length">
+        <td class="time-sch-section text-center" *ngIf="i === 0" [rowSpan]="2">
           {{text.SectionTitle}}
         </td>
 
