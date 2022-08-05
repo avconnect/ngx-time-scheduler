@@ -1,4 +1,4 @@
-<div class="time-sch-wrapper" [style.height]="maxHeight">
+<div class="time-sch-wrapper">
   <div class="time-sch-header-wrapper mb-1">
     <div class="time-sch-period-container">
       <!-- create active mode for selected buttons -->
@@ -49,7 +49,7 @@
       </tr>
     </table>
 
-    <div class="time-sch-content-wrap">
+    <div class="time-sch-content-wrap overflow-scroll" [style.height]="maxHeight">
       <table class="time-sch-table">
         <tr *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
             [style.height]="sectionItem.minRowHeight + 'px'">
