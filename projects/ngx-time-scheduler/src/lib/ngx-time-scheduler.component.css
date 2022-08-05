@@ -49,6 +49,11 @@
   width: 200px;
 }
 
+.time-sch-wrapper .time-sch-section-item:hover {
+  color: #2299dd!important;
+  text-decoration: underline;
+}
+
 .time-sch-wrapper th,
 .time-sch-wrapper td {
   border-width: 1px;
