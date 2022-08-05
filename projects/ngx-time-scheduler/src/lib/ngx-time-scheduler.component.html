@@ -1,7 +1,7 @@
 <div class="time-sch-wrapper" [style.height]="maxHeight">
   <div class="time-sch-header-wrapper mb-1">
     <div class="time-sch-period-container">
-      <button class="btn"
+      <button class="btn btn-sm btn-outline-secondary text-black me-1"
               *ngFor="let period of periods"
               [ngClass]="period.classes"
               (click)="changePeriod(period)"
@@ -12,16 +12,16 @@
     </div>
 
     <div class="time-sch-time-container">
-      <button class="btn" *ngIf="showGoto" (click)="showGotoModal = !showGotoModal">{{text.GotoButton}}</button>
+      <button class="btn btn-sm btn-outline-secondary text-black me-1" *ngIf="showGoto" (click)="showGotoModal = !showGotoModal">{{text.GotoButton}}</button>
       <div class="goto-modal" *ngIf="showGotoModal">
         <label>
           <input type="date" (change)="gotoDate($event.target.value)">
         </label>
       </div>
 
-      <button class="btn" *ngIf="showToday" (click)="gotoToday()">{{text.TodayButton}}</button>
-      <button class="btn" (click)="previousPeriod()">{{text.PrevButton}}</button>
-      <button class="btn" (click)="nextPeriod()">{{text.NextButton}}</button>
+      <button class="btn btn-sm btn-outline-secondary text-black me-1" *ngIf="showToday" (click)="gotoToday()">{{text.TodayButton}}</button>
+      <button class="btn btn-sm btn-outline-secondary text-black me-1" (click)="previousPeriod()">{{text.PrevButton}}</button>
+      <button class="btn btn-sm btn-outline-secondary text-black me-1" (click)="nextPeriod()">{{text.NextButton}}</button>
     </div>
 
     <h3 class="text-center m-0">

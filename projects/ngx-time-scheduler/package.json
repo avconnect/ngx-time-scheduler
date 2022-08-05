@@ -6,7 +6,9 @@
     "name": "Abhishek Jain",
     "email": "jabi1210@gmail.com"
   },
-  "publishConfig": { "registry": "https://registry.npmjs.org/" },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/abhishekjain12/ngx-time-scheduler.git"
@@ -31,7 +33,8 @@
     "@angular/common": "^9.1.11",
     "@angular/core": "^9.1.11",
     "@angular/cdk": "^9.2.4",
-    "moment": "^2.27.0"
+    "moment": "^2.27.0",
+    "bootstrap": "^5.2.0"
   },
   "dependencies": {
     "@angular/cdk": "^9.2.4",
