@@ -58,6 +58,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   header: Header[];
   sectionItems: SectionItem[];
   subscription = new Subscription();
+  formattedHeader: string;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -208,6 +209,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
 
     this.setItemsInSectionItems();
     this.showCurrentTimeIndicator();
+    this.formatHeader();
   }
 
   showCurrentTimeIndicator = () => {
@@ -346,10 +348,15 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   formatHeader() {
-    const start = this.start.locale(this.locale).format(this.headerFormat),
-      end = this.end.locale(this.locale).format(this.headerFormat);
-    if (start === end) return start;
-    return `${start} - ${end}`;
+    const start = this.start.locale(this.locale).format(this.headerFormat);
+    // NOTE: diff of one day & start and end are at midnight (12 AM)
+    if (this.end.diff(this.start, 'hours') === 24 && !this.start.hour() && !this.end.hour()) {
+      this.formattedHeader = start;
+      return;
+    }
+
+    const end =  moment(this.end).subtract(1, 'day').locale(this.locale).format(this.headerFormat);
+    this.formattedHeader = `${start} - ${end}`;
   }
 
   ngOnDestroy(): void {
