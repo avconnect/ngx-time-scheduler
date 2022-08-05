@@ -1,6 +1,6 @@
 {
   "name": "ngx-time-scheduler",
-  "version": "1.7.1",
+  "version": "1.8.1",
   "description": "A simple Angular Timeline Scheduler library",
   "author": {
     "name": "Abhishek Jain",
@@ -11,12 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/abhishekjain12/ngx-time-scheduler.git"
+    "url": "https://github.com/avconnect/ngx-time-scheduler"
   },
-  "bugs": {
-    "url": "https://github.com/abhishekja in12/ngx-time-scheduler/issues"
-  },
-  "homepage": "https://github.com/abhishekjain12/ngx-time-scheduler",
   "keywords": [
     "angular",
     "time-scheduler",
