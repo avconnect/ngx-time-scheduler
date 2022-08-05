@@ -30,10 +30,13 @@
     "@angular/core": "^9.1.11",
     "@angular/cdk": "^9.2.4",
     "moment": "^2.27.0",
-    "bootstrap": "^5.2.0"
+    "bootstrap": "^5.2.0",
+    "moment-timezone": "^0.5.34"
   },
   "dependencies": {
     "@angular/cdk": "^9.2.4",
-    "moment": "^2.27.0"
+    "moment": "^2.27.0",
+    "bootstrap": "^5.2.0",
+    "moment-timezone": "^0.5.34"
   }
 }

@@ -13,6 +13,7 @@ import {
   Events
 } from './ngx-time-scheduler.model';
 import * as moment_ from 'moment';
+import 'moment-timezone';
 import {Subscription} from 'rxjs';
 
 const moment = moment_;
@@ -45,6 +46,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() periods: Period[];
   @Input() events: Events = new Events();
   @Input() start = moment().startOf('day');
+  @Input() timezone: string = moment.tz.guess();
 
   end = moment().endOf('day');
   showGotoModal = false;
@@ -68,6 +70,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.setTimezone();
     this.setSectionsInSectionItems();
     this.changePeriod(this.periods[0], false);
     this.itemPush();
@@ -86,6 +89,16 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
 
   trackByFn(index, item) {
     return index;
+  }
+
+  setTimezone() {
+    // set timezone to browser default if invalid input is provided 
+    if (!moment.tz.zone(this.timezone)) this.timezone = moment.tz.guess();
+    moment.tz.setDefault(this.timezone);
+
+    // set timezone to both start and end
+    this.start.tz(this.timezone).startOf('day');
+    this.end.tz(this.timezone).endOf('day');
   }
 
   setSectionsInSectionItems() {

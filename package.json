@@ -39,7 +39,8 @@
     "@angular/platform-browser-dynamic": "^9.1.11",
     "@angular/router": "^9.1.11",
     "core-js": "^3.6.5",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.34",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
