@@ -54,6 +54,7 @@ export class Events {
   SectionClickEvent: (section: Section) => void;
   SectionContextMenuEvent: (section: Section, event: MouseEvent) => void;
   PeriodChange: (start: moment.Moment, end: moment.Moment) => void;
+  SortItemClicked: (item: SortItem) => void;
 }
 
 export class SectionItem {
@@ -93,4 +94,9 @@ export class HeaderDetails {
   name: string;
   colspan: number;
   tooltip?: string;
+}
+
+export class SortItem {
+  text: string;
+  prop: string;
 }
