@@ -6,6 +6,8 @@
   },
   "whitelistedNonPeerDependencies": [
     "@angular/cdk",
-    "moment"
+    "moment",
+    "@ng-bootstrap/ng-bootstrap",
+    "bootstrap"
   ]
 }
