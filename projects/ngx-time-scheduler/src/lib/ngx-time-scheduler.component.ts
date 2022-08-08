@@ -10,9 +10,11 @@ import {
   SectionItem,
   Section,
   Text,
-  Events
+  Events,
+  SortItem
 } from './ngx-time-scheduler.model';
 import * as moment_ from 'moment';
+import 'moment-timezone';
 import {Subscription} from 'rxjs';
 
 const moment = moment_;
@@ -45,6 +47,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() periods: Period[];
   @Input() events: Events = new Events();
   @Input() start = moment().startOf('day');
+  @Input() timezone: string = moment.tz.guess();
+  @Input() sortItems: SortItem[] = [];
 
   end = moment().endOf('day');
   showGotoModal = false;
@@ -58,6 +62,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   header: Header[];
   sectionItems: SectionItem[];
   subscription = new Subscription();
+  formattedHeader: string;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -67,6 +72,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.setTimezone();
     this.setSectionsInSectionItems();
     this.changePeriod(this.periods[0], false);
     this.itemPush();
@@ -85,6 +91,16 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
 
   trackByFn(index, item) {
     return index;
+  }
+
+  setTimezone() {
+    // set timezone to browser default if invalid input is provided 
+    if (!moment.tz.zone(this.timezone)) this.timezone = moment.tz.guess();
+    moment.tz.setDefault(this.timezone);
+
+    // set timezone to both start and end
+    this.start.tz(this.timezone).startOf('day');
+    this.end.tz(this.timezone).endOf('day');
   }
 
   setSectionsInSectionItems() {
@@ -189,7 +205,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   changePeriod(period: Period, userTrigger: boolean = true) {
     this.currentPeriod = period;
     const _start = this.start;
-    this.end = moment(_start).add(this.currentPeriod.timeFrameOverall, 'minutes').endOf('day');
+    this.end = moment(_start).add(this.currentPeriod.timeFrameOverall, 'minutes');
     this.currentPeriodMinuteDiff = Math.abs(this.start.diff(this.end, 'minutes'));
 
     if (userTrigger && this.events.PeriodChange) {
@@ -208,6 +224,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
 
     this.setItemsInSectionItems();
     this.showCurrentTimeIndicator();
+    this.formatHeader();
   }
 
   showCurrentTimeIndicator = () => {
@@ -255,7 +272,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     let prev: string;
     let colspan = 0;
 
-    while (now.isBefore(this.end) || now.isSame(this.end)) {
+    while (now.isBefore(this.end)) {
       if (!this.showBusinessDayOnly || (now.day() !== 0 && now.day() !== 6)) {
         const headerDetails = new HeaderDetails();
         headerDetails.name = now.locale(this.locale).format(format);
@@ -346,10 +363,15 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   formatHeader() {
-    const start = this.start.locale(this.locale).format(this.headerFormat),
-      end = this.end.locale(this.locale).format(this.headerFormat);
-    if (start === end) return start;
-    return `${start} - ${end}`;
+    const start = this.start.locale(this.locale).format(this.headerFormat);
+    // NOTE: diff of one day & start and end are at midnight (12 AM)
+    if (this.end.diff(this.start, 'hours') === 24 && !this.start.hour() && !this.end.hour()) {
+      this.formattedHeader = start;
+      return;
+    }
+
+    const end =  moment(this.end).subtract(1, 'day').locale(this.locale).format(this.headerFormat);
+    this.formattedHeader = `${start} - ${end}`;
   }
 
   ngOnDestroy(): void {

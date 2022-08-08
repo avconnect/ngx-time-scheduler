@@ -170,8 +170,9 @@ export class AppComponent implements OnInit {
 | allowDragging         | No        | boolean   | `false`                   | Whether or not dragging should be allowed. |
 | headerFormat          | No        | string    | `'Do MMM YYYY'`           | The momentjs format to use for the date range displayed as a header. |
 | minRowHeight          | No        | number    | `40`                      | The minimum height, in pixels, that a section should be. |
-| maxHeight             | No        | number    | `null`                    | The maximum height of the scheduler. |
+| maxHeight             | No        | string    | `null`                    | The maximum height of the scheduler body. |
 | text                  | No        | Text      | `new Text()`              | An object containing the text use in the scheduler, to be easily customized. |
+| timezone              | No        | string    | Current Timezone based on browser (e.g. America/Los_Angeles) | Timezone IANA Format  |
 | start                 | No        | moment    | `moment().startOf('day')` | The start time of the scheduler as a moment object. It's recommend to use `.startOf('day')`  on the moment for a clear starting point. |
 | locale                | No        | string    | `` (empty === 'en')       | To load a locale, pass the key and the string values to `moment.locale`. By default, Moment.js uses English (United States) locale strings. |
 
@@ -238,7 +239,15 @@ An object containing the text use in the scheduler, to be easily customized.
 | PrevButton    | string | `'Prev'`     |
 | TodayButton   | string | `'Today'`    |
 | GotoButton    | string | `'Go to'`    |
-| SectionTitle  | string | `'Section'`  |
+| SectionTitle  | string | `'BUS'`  |
+
+#### Sort Item
+An object containing a text to be shown and a prop (property) to sort a list/object.
+
+| Name    | Type   | Required | Default | Description |
+| ---     | ---    | ---      | ---     | ---         |
+| text    | string | Yes      | `null`  | Text shown on the dropdown menu. |
+| prop    | string | Yes      | `null`  | A property that will be used to sort list/object. |
 
 #### Events
 A selection of events are provided to hook into when creating the scheduler, and are triggered with most interactions with items.
@@ -251,6 +260,7 @@ A selection of events are provided to hook into when creating the scheduler, and
 | SectionContextMenuEvent | section: Section, event: MouseEvent      | void          | Triggered when a section is righted click (Context Menu). |
 | ItemDropped             | item: Item                               | void          | Triggered when an item is dropped onto a section. `item` is the new data after the action. |
 | PeriodChange            | start: moment.Moment, end: moment.Moment | void          | Triggered when an period is change. |
+| SortItemClicked         | item: SortItem                           | void          | Triggered when a sort item on dropdown menu is clicked. |
 
 
 **NOTE:** To prevent the default context menu of the browser, use event.preventDefault() in an event.ItemContextMenu() or event.SectionContextMenuEvent() function.
