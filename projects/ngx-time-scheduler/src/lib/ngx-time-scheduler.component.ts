@@ -210,7 +210,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     this.currentPeriodMinuteDiff = Math.abs(this.start.diff(this.end, 'minutes'));
 
     if (userTrigger && this.events.PeriodChange) {
-      this.events.PeriodChange(this.start, this.end);
+      // NOTE: end is always one day ahead, which gives out two date period (e.g start = 8/9 12:00 AM, end = 9/9 12:00 AM)
+      this.events.PeriodChange(this.start, moment(this.end).subtract(1, 'day'));
     }
 
     if (this.showBusinessDayOnly) {
