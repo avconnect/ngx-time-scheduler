@@ -38,7 +38,7 @@
           <div *ngIf="sortItems.length" ngbDropdown class="position-absolute start-0">
             <i ngbDropdownToggle class="bi bi-three-dots-vertical dropdown-toggle" [style.fontSize]="'14px'" [style.cursor]="'pointer'"></i>
             <ul ngbDropdownMenu class="dropwdown-menu">
-              <li *ngFor="let item of sortItems" [style.cursor]="'pointer'" (click)="events.SortItemClicked(item)">
+              <li *ngFor="let item of sortItems" [style.cursor]="'pointer'" (click)="events.SortItemClicked ? events.SortItemClicked(item) : false">
                 <a class="dropdown-item">{{ item.text }}</a>
               </li>
             </ul>

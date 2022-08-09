@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {NgxTimeSchedulerService} from './ngx-time-scheduler.service';
 import {
@@ -22,7 +22,8 @@ const moment = moment_;
 @Component({
   selector: 'ngx-ts[items][periods][sections]',
   templateUrl: './ngx-time-scheduler.component.html',
-  styleUrls: ['./ngx-time-scheduler.component.css']
+  styleUrls: ['./ngx-time-scheduler.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @ViewChild('sectionTd') set SectionTd(elementRef: ElementRef) {
