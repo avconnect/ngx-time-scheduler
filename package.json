@@ -1,6 +1,6 @@
 {
   "name": "ngx-time-scheduler",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "files": [
     "dist/ngx-time-scheduler"
   ],
