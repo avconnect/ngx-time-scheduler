@@ -50,6 +50,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() start = moment().startOf('day');
   @Input() timezone: string = moment.tz.guess();
   @Input() sortItems: SortItem[] = [];
+  @Input() btnClasses: string = '';
+  @Input() periodActiveClass: string = 'period-default-active'
 
   end = moment().endOf('day');
   showGotoModal = false;
@@ -64,6 +66,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   sectionItems: SectionItem[];
   subscription = new Subscription();
   formattedHeader: string;
+  activePeriod: number = 0;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -73,6 +76,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.setActivePeriodButton(this.activePeriod);
     this.setTimezone();
     this.setSectionsInSectionItems();
     this.changePeriod(this.periods[0], false);
@@ -83,6 +87,11 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     this.sectionPop();
     this.sectionRemove();
     this.refresh();
+  }
+
+  setActivePeriodButton(idx: number) {
+    this.activePeriod = idx;
+    this.periods = this.periods.map((period, index) => ({ ...period, isClicked: index === this.activePeriod ? true : false }));
   }
 
   refreshView() {
