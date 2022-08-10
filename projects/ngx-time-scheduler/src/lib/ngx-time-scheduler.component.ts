@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {NgxTimeSchedulerService} from './ngx-time-scheduler.service';
 import {
@@ -22,7 +22,8 @@ const moment = moment_;
 @Component({
   selector: 'ngx-ts[items][periods][sections]',
   templateUrl: './ngx-time-scheduler.component.html',
-  styleUrls: ['./ngx-time-scheduler.component.css']
+  styleUrls: ['./ngx-time-scheduler.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @ViewChild('sectionTd') set SectionTd(elementRef: ElementRef) {
@@ -49,6 +50,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() start = moment().startOf('day');
   @Input() timezone: string = moment.tz.guess();
   @Input() sortItems: SortItem[] = [];
+  @Input() btnClasses: string = '';
+  @Input() periodActiveClass: string = 'period-default-active'
 
   end = moment().endOf('day');
   showGotoModal = false;
@@ -63,6 +66,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   sectionItems: SectionItem[];
   subscription = new Subscription();
   formattedHeader: string;
+  activePeriod: number = 0;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -72,6 +76,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.setActivePeriodButton(this.activePeriod);
     this.setTimezone();
     this.setSectionsInSectionItems();
     this.changePeriod(this.periods[0], false);
@@ -82,6 +87,11 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     this.sectionPop();
     this.sectionRemove();
     this.refresh();
+  }
+
+  setActivePeriodButton(idx: number) {
+    this.activePeriod = idx;
+    this.periods = this.periods.map((period, index) => ({ ...period, isClicked: index === this.activePeriod ? true : false }));
   }
 
   refreshView() {
@@ -209,7 +219,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     this.currentPeriodMinuteDiff = Math.abs(this.start.diff(this.end, 'minutes'));
 
     if (userTrigger && this.events.PeriodChange) {
-      this.events.PeriodChange(this.start, this.end);
+      // NOTE: end is always one day ahead, which gives out two date period (e.g start = 8/9 12:00 AM, end = 9/9 12:00 AM)
+      this.events.PeriodChange(this.start, moment(this.end).subtract(1, 'day'));
     }
 
     if (this.showBusinessDayOnly) {

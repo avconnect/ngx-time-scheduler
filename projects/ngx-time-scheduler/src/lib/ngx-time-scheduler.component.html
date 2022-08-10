@@ -2,10 +2,10 @@
   <div class="time-sch-header-wrapper mb-1">
     <div class="time-sch-period-container">
       <!-- create active mode for selected buttons -->
-      <button class="btn btn-sm btn-outline-secondary text-black mr-1"
-              *ngFor="let period of periods"
-              [ngClass]="period.classes"
-              (click)="changePeriod(period)"
+      <button class=""
+              *ngFor="let period of periods; let i = index"
+              [class]="btnClasses + ' ' + period.classes + ' ' + (period.isClicked ? periodActiveClass : '')"
+              (click)="changePeriod(period); setActivePeriodButton(i)"
               [title]="period.tooltip? period.tooltip : ''"
       >
         {{period.name}}
@@ -13,16 +13,16 @@
     </div>
 
     <div class="time-sch-time-container">
-      <button class="btn btn-sm btn-outline-secondary text-black mr-1" *ngIf="showGoto" (click)="showGotoModal = !showGotoModal">{{text.GotoButton}}</button>
+      <button [ngClass]="btnClasses" *ngIf="showGoto" (click)="showGotoModal = !showGotoModal">{{text.GotoButton}}</button>
       <div class="goto-modal" *ngIf="showGotoModal">
         <label>
           <input type="date" (change)="gotoDate($event.target.value)">
         </label>
       </div>
 
-      <button class="btn btn-sm btn-outline-secondary text-black mr-1" *ngIf="showToday" (click)="gotoToday()">{{text.TodayButton}}</button>
-      <button class="btn btn-sm btn-outline-secondary text-black mr-1" (click)="previousPeriod()">{{text.PrevButton}}</button>
-      <button class="btn btn-sm btn-outline-secondary text-black mr-1" (click)="nextPeriod()">{{text.NextButton}}</button>
+      <button [ngClass]="btnClasses" *ngIf="showToday" (click)="gotoToday()">{{text.TodayButton}}</button>
+      <button [ngClass]="btnClasses" (click)="previousPeriod()">{{text.PrevButton}}</button>
+      <button [ngClass]="btnClasses" (click)="nextPeriod()">{{text.NextButton}}</button>
     </div>
 
     <h3 class="text-center m-0">
@@ -38,7 +38,7 @@
           <div *ngIf="sortItems.length" ngbDropdown class="position-absolute start-0">
             <i ngbDropdownToggle class="bi bi-three-dots-vertical dropdown-toggle" [style.fontSize]="'14px'" [style.cursor]="'pointer'"></i>
             <ul ngbDropdownMenu class="dropwdown-menu">
-              <li *ngFor="let item of sortItems" [style.cursor]="'pointer'" (click)="events.SortItemClicked(item)">
+              <li *ngFor="let item of sortItems" [style.cursor]="'pointer'" (click)="events.SortItemClicked ? events.SortItemClicked(item) : false">
                 <a class="dropdown-item">{{ item.text }}</a>
               </li>
             </ul>
@@ -57,7 +57,7 @@
       </tr>
     </table>
 
-    <div class="time-sch-content-wrap overflow-scroll" [style.height]="maxHeight">
+    <div class="time-sch-content-wrap" [style.height]="maxHeight">
       <table class="time-sch-table">
         <tr *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
             [style.height]="sectionItem.minRowHeight + 'px'">

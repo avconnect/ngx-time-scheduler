@@ -71,6 +71,8 @@
 
 .time-sch-content-wrap {
   position: relative;
+  overflow: scroll;
+  overflow: overlay;
 }
 
 .time-sch-section-wrapper {
@@ -147,4 +149,9 @@
 
 .dropdown-toggle::after {
   display: none !important;
+}
+
+.period-default-active {
+  background-color: #2299dd!important;
+  color: white !important;
 }

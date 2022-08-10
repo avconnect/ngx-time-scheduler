@@ -6,8 +6,11 @@
   },
   "whitelistedNonPeerDependencies": [
     "@angular/cdk",
+    "@angular/localize",
     "moment",
+    "moment-timezone",
     "@ng-bootstrap/ng-bootstrap",
-    "bootstrap"
+    "bootstrap",
+    "bootstrap-icons"
   ]
 }
