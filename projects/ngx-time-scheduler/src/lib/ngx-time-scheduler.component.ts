@@ -11,7 +11,8 @@ import {
   Section,
   Text,
   Events,
-  SortItem
+  SortItem,
+  SettingItem,
 } from './ngx-time-scheduler.model';
 import * as moment_ from 'moment';
 import 'moment-timezone';
@@ -51,7 +52,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() timezone: string = moment.tz.guess();
   @Input() sortItems: SortItem[] = [];
   @Input() btnClasses: string = '';
-  @Input() periodActiveClass: string = 'period-default-active'
+  @Input() periodActiveClass: string = 'period-default-active';
+  @Input() settingItems: SettingItem[] = [];
 
   end = moment().endOf('day');
   showGotoModal = false;
