@@ -35,13 +35,26 @@
       <tr *ngFor="let timeFrameHeader of header; let i = index; trackBy: trackByFn">
 
         <td class="time-sch-section text-center position-relative" *ngIf="i === 0" [rowSpan]="2">
-          <div *ngIf="sortItems.length" ngbDropdown class="position-absolute start-0">
+          <div ngbDropdown *ngIf="sortItems.length || settingItems.length" #settingsDropdown="ngbDropdown" container="body" autoClose="outside" class="position-absolute start-0">
             <i ngbDropdownToggle class="bi bi-three-dots-vertical dropdown-toggle" [style.fontSize]="'14px'" [style.cursor]="'pointer'"></i>
-            <ul ngbDropdownMenu class="dropwdown-menu">
-              <li *ngFor="let item of sortItems" [style.cursor]="'pointer'" (click)="events.SortItemClicked ? events.SortItemClicked(item) : false">
-                <a class="dropdown-item">{{ item.text }}</a>
-              </li>
-            </ul>
+            <div ngbDropdownMenu>
+              <div *ngIf="sortItems.length" ngbDropdownItem class="px-0">
+                <div ngbDropdown container="body" placement="right-top">
+                  <div ngbDropdownToggle class="px-3 d-flex justify-content-between" [style.cursor]="'pointer'" [style.fontSize]="'14px'" [style.width]="'100%'">
+                    <span>Sort By</span>
+                    <div class="d-flex">
+                      <i class="bi bi-caret-right-fill align-self-center" [style.fontSize]="'10px'"></i>
+                    </div>
+                  </div>
+                  <div ngbDropdownMenu>
+                    <button *ngFor="let item of sortItems" ngbDropdownItem [style.fontSize]="'14px'" (click)="events.SortItemClicked ? events.SortItemClicked(item) : false">{{ item.text }}</button>
+                  </div>
+                </div>
+              </div>
+              <div *ngFor="let item of settingItems" ngbDropdownItem class="px-0">
+                <span class="px-3" [style.fontSize]="'14px'" (click)="events.SettingItemClicked ? events.SettingItemClicked(item) : false; settingsDropdown.close()" [style.cursor]="'pointer'">{{ item.text }}</span>
+              </div>
+            </div>
           </div>
           {{text.SectionTitle}}
         </td>
