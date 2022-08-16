@@ -54,6 +54,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() btnClasses: string = '';
   @Input() periodActiveClass: string = 'period-default-active';
   @Input() settingItems: SettingItem[] = [];
+  @Input() startHour: number = 0;
 
   end = moment().endOf('day');
   showGotoModal = false;
@@ -80,6 +81,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setActivePeriodButton(this.activePeriod);
     this.setTimezone();
+    this.setStartHour();
     this.setSectionsInSectionItems();
     this.changePeriod(this.periods[0], false);
     this.itemPush();
@@ -113,6 +115,11 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     // set timezone to both start and end
     this.start.tz(this.timezone).startOf('day');
     this.end.tz(this.timezone).endOf('day');
+  }
+
+  setStartHour() {
+    this.start.add(this.startHour, 'hour');
+    this.end.add(this.startHour, 'hour');
   }
 
   setSectionsInSectionItems() {
@@ -221,8 +228,13 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     this.currentPeriodMinuteDiff = Math.abs(this.start.diff(this.end, 'minutes'));
 
     if (userTrigger && this.events.PeriodChange) {
-      // NOTE: end is always one day ahead, which gives out two date period (e.g start = 8/9 12:00 AM, end = 9/9 12:00 AM)
-      this.events.PeriodChange(this.start, moment(this.end).subtract(1, 'day'));
+      const _end = moment(this.end);
+      /**
+       * end date is one day ahead at midnight (hour == 0)
+       * which gives out two date period in 24 hr period (e.g start = 8/9 12:00 AM, end = 9/9 12:00 AM)
+       */
+      if (_end.hour() === 0) _end.subtract(1, 'day');
+      this.events.PeriodChange(this.start, _end);
     }
 
     if (this.showBusinessDayOnly) {
@@ -376,14 +388,21 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   formatHeader() {
+    /**
+      * end date is one day ahead at midnight (hour == 0)
+      * which gives out two date period in 24 hr period (e.g start = 8/9 12:00 AM, end = 9/9 12:00 AM)
+    */
+    const _end = moment(this.end).locale(this.locale);
+    if (_end.hour() === 0) _end.subtract(1, 'day');
+
     const start = this.start.locale(this.locale).format(this.headerFormat);
-    // NOTE: diff of one day & start and end are at midnight (12 AM)
-    if (this.end.diff(this.start, 'hours') === 24 && !this.start.hour() && !this.end.hour()) {
+    const end = _end.format(this.headerFormat);
+
+    if (start === end) {
       this.formattedHeader = start;
       return;
     }
 
-    const end =  moment(this.end).subtract(1, 'day').locale(this.locale).format(this.headerFormat);
     this.formattedHeader = `${start} - ${end}`;
   }
 
