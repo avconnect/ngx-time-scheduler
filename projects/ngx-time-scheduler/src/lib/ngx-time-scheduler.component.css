@@ -1,5 +1,5 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import '~bootstrap-icons/font/bootstrap-icons.css';
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 .goto-modal {
   position: absolute;
@@ -51,12 +51,12 @@
 }
 
 .time-sch-wrapper .time-sch-section-item:hover {
-  color: #2299dd!important;
+  color: #2299dd !important;
   text-decoration: underline;
 }
 
 .bi-three-dots-vertical:hover {
-  color: #2299dd!important;
+  color: #2299dd !important;
 }
 
 .time-sch-wrapper th,
@@ -94,14 +94,14 @@
   position: absolute;
   min-height: 1em;
   clear: both;
-  background-color: #2299dd;
+  /* background-color: #2299dd; */
   color: white;
   border-radius: 2px;
   cursor: pointer;
   transition: background-color ease 0.1s;
-  border-width: 1px;
+  /* border-width: 1px;
   border-style: solid;
-  border-color: #c1c1c1;
+  border-color: #c1c1c1; */
 }
 
 .time-sch-item-content {
@@ -109,7 +109,7 @@
   white-space: nowrap;
   position: relative;
   z-index: 1;
-  padding: 4px 0 4px 6px;
+  /* padding: 4px 0 4px 6px; */
 }
 
 .time-sch-item-start,
@@ -121,12 +121,12 @@
 
 .time-sch-item-start {
   left: 1px;
-  border-right: 2px dotted #ffffff;
+  width: 5px;
 }
 
 .time-sch-item-end {
   right: 1px;
-  border-left: 2px dotted #ffffff;
+  width: 5px;
 }
 
 .time-sch-current-time {
@@ -152,6 +152,27 @@
 }
 
 .period-default-active {
-  background-color: #2299dd!important;
+  background-color: #2299dd !important;
   color: white !important;
+}
+
+.block .progress, .charge .progress, .full-charged .progress, .detected .progress {
+  background-color: transparent;
+  font-size: 0.85rem;
+}
+
+.block .progress-bar {
+  background-color: rgba(0,191,255,0.8) !important;
+}
+
+.charge .progress-bar {
+  background-color: rgba(34,139,34,0.8) !important;
+}
+
+.full-charged .progress-bar {
+  background-color: rgba(34,139,34,0.2) !important;
+}
+
+.detected .progress-bar {
+  background-color: rgb(114,57,234,0.8) !important;
 }

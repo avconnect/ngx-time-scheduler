@@ -7,8 +7,7 @@
   "whitelistedNonPeerDependencies": [
     "@angular/cdk",
     "@angular/localize",
-    "moment",
-    "moment-timezone",
+    "luxon",
     "@ng-bootstrap/ng-bootstrap",
     "bootstrap",
     "bootstrap-icons"
