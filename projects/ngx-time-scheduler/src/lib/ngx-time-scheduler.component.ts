@@ -406,13 +406,13 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<Section>) {
+    this.events.ItemDropped(event.item.data, event.container, event.previousContainer);
+
     // NOTE: only for items from the scheduler
     if (event.previousContainer.data instanceof Section) {
       event.item.data.sectionID = event.container.data.id;
       this.refreshView();
     }
-    
-    this.events.ItemDropped(event.item.data, event.container, event.previousContainer);
   }
 
   itemPush() {
