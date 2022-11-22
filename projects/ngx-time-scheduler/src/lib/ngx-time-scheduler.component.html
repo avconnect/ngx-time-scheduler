@@ -1,28 +1,46 @@
 <div class="time-sch-wrapper">
-  <div class="time-sch-header-wrapper mb-1">
+  <div class="time-sch-header-wrapper mb-1" *ngIf="showHeader">
     <div class="time-sch-period-container">
-      <!-- create active mode for selected buttons -->
-      <button class=""
-              *ngFor="let period of periods; let i = index"
-              [class]="btnClasses + ' ' + period.classes + ' ' + (period.isClicked ? periodActiveClass : '')"
-              (click)="changePeriod(period); setActivePeriodButton(i)"
-              [title]="period.tooltip? period.tooltip : ''"
+      <button
+        class=""
+        *ngFor="let period of periods; let i = index"
+        [class]="
+          btnClasses +
+          ' ' +
+          period.classes +
+          ' ' +
+          (period.isClicked ? periodActiveClass : '')
+        "
+        (click)="changePeriod(period); setActivePeriodButton(i)"
+        [title]="period.tooltip ? period.tooltip : ''"
       >
-        {{period.name}}
+        {{ period.name }}
       </button>
     </div>
 
     <div class="time-sch-time-container">
-      <button [ngClass]="btnClasses" *ngIf="showGoto" (click)="showGotoModal = !showGotoModal">{{text.GotoButton}}</button>
+      <button
+        [ngClass]="btnClasses"
+        *ngIf="showGoto"
+        (click)="showGotoModal = !showGotoModal"
+      >
+        {{ text.GotoButton }}
+      </button>
       <div class="goto-modal" *ngIf="showGotoModal">
         <label>
-          <input type="date" (change)="gotoDate($event.target.value)">
+          <input type="date" (change)="gotoDate($event.target.value)" />
         </label>
       </div>
 
-      <button [ngClass]="btnClasses" *ngIf="showToday" (click)="gotoToday()">{{text.TodayButton}}</button>
-      <button [ngClass]="btnClasses" (click)="previousPeriod()">{{text.PrevButton}}</button>
-      <button [ngClass]="btnClasses" (click)="nextPeriod()">{{text.NextButton}}</button>
+      <button [ngClass]="btnClasses" *ngIf="showToday" (click)="gotoToday()">
+        {{ text.TodayButton }}
+      </button>
+      <button [ngClass]="btnClasses" (click)="previousPeriod()">
+        {{ text.PrevButton }}
+      </button>
+      <button [ngClass]="btnClasses" (click)="nextPeriod()">
+        {{ text.NextButton }}
+      </button>
     </div>
 
     <h3 class="text-center m-0">
@@ -32,108 +50,265 @@
 
   <div class="time-sch-table-wrapper">
     <table class="time-sch-table">
-      <tr *ngFor="let timeFrameHeader of header; let i = index; trackBy: trackByFn">
-
-        <td class="time-sch-section text-center position-relative" *ngIf="i === 0" [rowSpan]="2">
-          <div ngbDropdown *ngIf="sortItems.length || settingItems.length" #settingsDropdown="ngbDropdown" container="body" autoClose="outside" class="position-absolute start-0">
-            <i ngbDropdownToggle class="bi bi-three-dots-vertical dropdown-toggle" [style.fontSize]="'14px'" [style.cursor]="'pointer'"></i>
+      <tr
+        *ngFor="
+          let timeFrameHeader of header;
+          let i = index;
+          trackBy: trackByFn
+        "
+      >
+        <td
+          class="time-sch-section text-center position-relative"
+          *ngIf="i === 0"
+          [rowSpan]="2"
+        >
+          <div
+            ngbDropdown
+            *ngIf="sortItems.length || settingItems.length"
+            #settingsDropdown="ngbDropdown"
+            container="body"
+            autoClose="outside"
+            class="position-absolute start-0"
+          >
+            <i
+              ngbDropdownToggle
+              class="bi bi-three-dots-vertical dropdown-toggle"
+              [style.fontSize]="'14px'"
+              [style.cursor]="'pointer'"
+            ></i>
             <div ngbDropdownMenu>
               <div *ngIf="sortItems.length" ngbDropdownItem class="px-0">
                 <div ngbDropdown container="body" placement="right-top">
-                  <div ngbDropdownToggle class="px-3 d-flex justify-content-between" [style.cursor]="'pointer'" [style.fontSize]="'14px'" [style.width]="'100%'">
+                  <div
+                    ngbDropdownToggle
+                    class="px-3 d-flex justify-content-between"
+                    [style.cursor]="'pointer'"
+                    [style.fontSize]="'14px'"
+                    [style.width]="'100%'"
+                  >
                     <span>Sort By</span>
                     <div class="d-flex">
-                      <i class="bi bi-caret-right-fill align-self-center" [style.fontSize]="'10px'"></i>
+                      <i
+                        class="bi bi-caret-right-fill align-self-center"
+                        [style.fontSize]="'10px'"
+                      ></i>
                     </div>
                   </div>
                   <div ngbDropdownMenu>
-                    <button *ngFor="let item of sortItems" ngbDropdownItem [style.fontSize]="'14px'" (click)="events.SortItemClicked ? events.SortItemClicked(item) : false">{{ item.text }}</button>
+                    <button
+                      *ngFor="let item of sortItems"
+                      ngbDropdownItem
+                      [style.fontSize]="'14px'"
+                      (click)="
+                        events.SortItemClicked
+                          ? events.SortItemClicked(item)
+                          : false
+                      "
+                    >
+                      {{ item.text }}
+                    </button>
                   </div>
                 </div>
               </div>
-              <div *ngFor="let item of settingItems" ngbDropdownItem class="px-0">
-                <span class="px-3" [style.fontSize]="'14px'" (click)="events.SettingItemClicked ? events.SettingItemClicked(item) : false; settingsDropdown.close()" [style.cursor]="'pointer'">{{ item.text }}</span>
+              <div
+                *ngFor="let item of settingItems"
+                ngbDropdownItem
+                class="px-0"
+              >
+                <span
+                  class="px-3"
+                  [style.fontSize]="'14px'"
+                  (click)="
+                    events.SettingItemClicked
+                      ? events.SettingItemClicked(item)
+                      : false;
+                    settingsDropdown.close()
+                  "
+                  [style.cursor]="'pointer'"
+                  >{{ item.text }}</span
+                >
               </div>
             </div>
           </div>
-          {{text.SectionTitle}}
+          {{ text.SectionTitle }}
         </td>
 
-        <td class="text-center"
-            *ngFor="let dateTime of timeFrameHeader.headerDetails; trackBy: trackByFn"
-            [colSpan]="dateTime.colspan"
-            [title]="dateTime.tooltip? dateTime.tooltip : ''"
+        <td
+          class="text-center"
+          *ngFor="
+            let dateTime of timeFrameHeader.headerDetails;
+            trackBy: trackByFn
+          "
+          [colSpan]="dateTime.colspan"
+          [title]="dateTime.tooltip ? dateTime.tooltip : ''"
         >
-          {{dateTime.name}}
+          {{ dateTime.name }}
         </td>
-
       </tr>
     </table>
 
     <div class="time-sch-content-wrap" [style.height]="maxHeight">
       <table class="time-sch-table">
-        <tr *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
-            [style.height]="sectionItem.minRowHeight + 'px'">
-          <td class="time-sch-section time-sch-section-item text-center" #sectionTd
-              (click)="events.SectionClickEvent ? events.SectionClickEvent(sectionItem.section) : false"
-              (contextmenu)="events.SectionContextMenuEvent ? events.SectionContextMenuEvent(sectionItem.section, $event) : false"
-              [style.cursor]="events.SectionClickEvent ? 'pointer' : ''"
-              [title]="sectionItem.section.tooltip? sectionItem.section.tooltip : ''"
+        <tr
+          *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
+          [style.height]="sectionItem.minRowHeight + 'px'"
+          [style.backgroundColor]="sectionItem.section.backgroundColor"
+        >
+          <td
+            class="time-sch-section time-sch-section-item text-center"
+            #sectionTd
+            (click)="
+              events.SectionClickEvent
+                ? events.SectionClickEvent(sectionItem.section)
+                : false
+            "
+            (contextmenu)="
+              events.SectionContextMenuEvent
+                ? events.SectionContextMenuEvent(sectionItem.section, $event)
+                : false
+            "
+            [style.cursor]="events.SectionClickEvent ? 'pointer' : ''"
+            [title]="
+              sectionItem.section.tooltip ? sectionItem.section.tooltip : ''
+            "
           >
-            {{sectionItem.section.name}}
+            {{ sectionItem.section.name }}
           </td>
 
-          <td *ngFor="let td of header[header.length - 1].headerDetails; trackBy: trackByFn"></td>
+          <td
+            *ngFor="
+              let td of header[header.length - 1].headerDetails;
+              trackBy: trackByFn
+            "
+          ></td>
         </tr>
       </table>
 
-      <div class="time-sch-section-wrapper" [style.left]="SectionLeftMeasure" cdkDropListGroup>
-        <div class="time-sch-section-container"
-             cdkDropList
-             cdkDropListSortingDisabled
-             [cdkDropListData]="sectionItem.section"
-             (cdkDropListDropped)="drop($event)"
-             *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
-             [style.height]="sectionItem.minRowHeight + 'px'"
+      <div class="time-sch-section-wrapper" [style.left]="SectionLeftMeasure">
+        <div
+          #sectionContainers
+          class="time-sch-section-container"
+          [id]="'section-' + sectionItem.section.id"
+          cdkDropList
+          cdkDropListSortingDisabled
+          [cdkDropListData]="sectionItem.section"
+          (cdkDropListDropped)="drop($event)"
+          *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
+          [style.height]="sectionItem.minRowHeight + 'px'"
         >
-          <div class="time-sch-item"
-               cdkDrag
-               cdkDragLockAxis="y"
-               cdkDragBoundary=".time-sch-section-wrapper"
-               [cdkDragData]="itemMeta.item"
-               [cdkDragDisabled]="!allowDragging"
-               *ngFor="let itemMeta of sectionItem.itemMetas"
-               [ngClass]="itemMeta.item.classes"
-               (click)="events.ItemClicked ? events.ItemClicked(itemMeta.item) : false"
-               (contextmenu)="events.ItemContextMenu ? events.ItemContextMenu(itemMeta.item, $event) : false"
-               [style.height]="minRowHeight + 'px'"
-               [style.top]="itemMeta.cssTop + 'px'"
-               [style.left]="itemMeta.cssLeft + '%'"
-               [style.width]="itemMeta.cssWidth + '%'"
+          <div
+            class="time-sch-item"
+            cdkDrag
+            cdkDragLockAxis="y"
+            cdkDragBoundary=".time-sch-section-wrapper"
+            [cdkDragData]="itemMeta.item"
+            [cdkDragDisabled]="
+              allowDragging === false
+                ? true
+                : allowDragging && !itemMeta.item.isDraggable
+                ? true
+                : false
+            "
+            *ngFor="let itemMeta of sectionItem.itemMetas"
+            [ngClass]="itemMeta.item.classes"
+            (click)="
+              events.ItemClicked ? events.ItemClicked(itemMeta.item) : false
+            "
+            (contextmenu)="
+              events.ItemContextMenu
+                ? events.ItemContextMenu(itemMeta.item, $event)
+                : false
+            "
+            [style.height]="minRowHeight + 'px'"
+            [style.top]="itemMeta.cssTop + 'px'"
+            [style.left]="itemMeta.cssLeft + '%'"
+            [style.width]="itemMeta.cssWidth + '%'"
           >
-            <div class="item-drag-placeholder"
-                 *cdkDragPlaceholder
-                 [style.height]="(minRowHeight - 6) + 'px'"
-                 [style.left]="itemMeta.cssLeft + '%'"
-                 [style.width]="'calc('+ itemMeta.cssWidth + '% - 6px)'"
+            <div
+              class="item-drag-placeholder"
+              *cdkDragPlaceholder
+              [style.height]="minRowHeight - 6 + 'px'"
+              [style.left]="itemMeta.cssLeft + '%'"
+              [style.width]="'calc(' + itemMeta.cssWidth + '% - 6px)'"
             ></div>
-            <div class="time-sch-item-start" *ngIf="itemMeta.isStart"></div>
-            <div class="time-sch-item-content"
-                 [title]="itemMeta.item.tooltip? itemMeta.item.tooltip : ''">
-              {{itemMeta.item.name}}
+
+            <div
+              class="time-sch-item-start"
+              cdkDragLockAxis="x"
+              cdkDrag
+              [cdkDragDisabled]="
+                allowDragging === false
+                  ? true
+                  : allowDragging && !itemMeta.item.isResizable
+                  ? true
+                  : false
+              "
+              (cdkDragStarted)="onDragStart(itemMeta)"
+              (cdkDragReleased)="onDragReleased()"
+              (cdkDragMoved)="
+                resize(sectionContainers, itemMeta, $event, 'left')
+              "
+              [style.zIndex]="100"
+              [style.cursor]="
+                allowDragging && itemMeta.item.isResizable
+                  ? 'ew-resize'
+                  : 'auto'
+              "
+            ></div>
+
+            <div
+              class="time-sch-item-content"
+              [title]="itemMeta.item.tooltip ? itemMeta.item.tooltip : ''"
+            >
+              <ngb-progressbar
+                [max]="100"
+                [value]="100"
+                [height]="minRowHeight + 'px'"
+                class="itemMeta.item.type ? itemMeta.item.type : ''"
+              >
+                <span
+                  [style.textAlign]="'start'"
+                  [style.padding]="'4px 0 4px 6px'"
+                >
+                  {{ itemMeta.item.name }}
+                </span>
+              </ngb-progressbar>
             </div>
-            <div class="time-sch-item-end" *ngIf="itemMeta.isEnd"></div>
+
+            <div
+              class="time-sch-item-end"
+              cdkDragLockAxis="x"
+              cdkDrag
+              [cdkDragDisabled]="
+                allowDragging === false
+                  ? true
+                  : allowDragging && !itemMeta.item.isResizable
+                  ? true
+                  : false
+              "
+              (cdkDragStarted)="onDragStart(itemMeta)"
+              (cdkDragReleased)="onDragReleased()"
+              (cdkDragMoved)="
+                resize(sectionContainers, itemMeta, $event, 'right')
+              "
+              [style.zIndex]="100"
+              [style.cursor]="
+                allowDragging && itemMeta.item.isResizable
+                  ? 'ew-resize'
+                  : 'auto'
+              "
+            ></div>
           </div>
         </div>
 
-        <div class="time-sch-current-time"
-             *ngIf="showCurrentTime"
-             [title]="currentTimeTitle"
-             [style.visibility]="currentTimeVisibility"
-             [style.left]="currentTimeIndicatorPosition"
+        <div
+          class="time-sch-current-time"
+          *ngIf="showCurrentTime"
+          [title]="currentTimeTitle"
+          [style.visibility]="currentTimeVisibility"
+          [style.left]="currentTimeIndicatorPosition"
         ></div>
       </div>
-
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
-import * as moment from 'moment';
+import { CdkDropList } from "@angular/cdk/drag-drop";
+import { DateTime } from "luxon";
 
 export class Period {
   name: string;
@@ -13,18 +14,26 @@ export class Period {
 export class Item {
   id: number;
   name: string;
-  start: moment.Moment;
-  end: moment.Moment;
+  start: DateTime;
+  end: DateTime;
   classes: string;
   sectionID: number;
   tooltip?: string;
   metadata?: any;
+  isDraggable: boolean;
+  isResizable: boolean;
+  type?: 'block' | 'charge' | 'full-charged' | 'detected';
 }
 
 export class Section {
   id: number;
   name: string;
   tooltip?: string;
+  backgroundColor?: string;
+
+  constructor() {
+    this.backgroundColor = "transparent";
+  }
 }
 
 export class Text {
@@ -35,11 +44,11 @@ export class Text {
   SectionTitle: string;
 
   constructor() {
-    this.NextButton = 'Next';
-    this.PrevButton = 'Prev';
-    this.TodayButton = 'Today';
-    this.GotoButton = 'Go to';
-    this.SectionTitle = 'BUS';
+    this.NextButton = "Next";
+    this.PrevButton = "Prev";
+    this.TodayButton = "Today";
+    this.GotoButton = "Go to";
+    this.SectionTitle = "BUS";
   }
 }
 
@@ -48,12 +57,12 @@ export class Events {
   // ItemMovement: (item: Item, start: any, end: any) => void;
   // ItemMovementStart: (item: Item, start: any, end: any) => void;
   // ItemMovementEnd: (item: Item, start: any, end: any) => void;
-  ItemDropped: (item: Item) => void;
+  ItemDropped: (item: Item, currContainer: CdkDropList, prevContainer: CdkDropList) => void;
   ItemClicked: (item: Item) => void;
   ItemContextMenu: (item: Item, event: MouseEvent) => void;
   SectionClickEvent: (section: Section) => void;
   SectionContextMenuEvent: (section: Section, event: MouseEvent) => void;
-  PeriodChange: (start: moment.Moment, end: moment.Moment) => void;
+  PeriodChange: (start: DateTime, end: DateTime) => void;
   SortItemClicked: (item: SortItem) => void;
   SettingItemClicked: (item: SettingItem) => void;
 }
