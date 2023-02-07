@@ -46,11 +46,13 @@
   position: relative;
 }
 
-.time-sch-wrapper .time-sch-section {
+.time-sch-wrapper .time-sch-section,
+.time-sch-wrapper .time-sch-section .row {
   width: 200px;
+  padding: 0;
 }
 
-.time-sch-wrapper .time-sch-section-item:hover {
+.time-sch-wrapper .time-sch-section-item .time-sch-section-item-name:hover {
   color: #2299dd !important;
   text-decoration: underline;
 }
@@ -67,6 +69,16 @@
   border-bottom-color: #e1e1e1;
   border-left-color: #c1c1c1;
   border-right-color: #c1c1c1;
+}
+
+.time-sch-wrapper .inner-td {
+  border-width: 1px;
+  border-style: solid;
+  border-left-color: #c1c1c1;
+  border-right-color: #c1c1c1;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
 }
 
 .time-sch-content-wrap {
@@ -156,23 +168,26 @@
   color: white !important;
 }
 
-.block .progress, .charge .progress, .full-charged .progress, .detected .progress {
+.block .progress,
+.charge .progress,
+.full-charged .progress,
+.detected .progress {
   background-color: transparent;
   font-size: 0.85rem;
 }
 
 .block .progress-bar {
-  background-color: rgba(0,191,255,0.8) !important;
+  background-color: rgba(0, 191, 255, 0.8) !important;
 }
 
 .charge .progress-bar {
-  background-color: rgba(34,139,34,0.8) !important;
+  background-color: rgba(34, 139, 34, 0.8) !important;
 }
 
 .full-charged .progress-bar {
-  background-color: rgba(34,139,34,0.2) !important;
+  background-color: rgba(34, 139, 34, 0.2) !important;
 }
 
 .detected .progress-bar {
-  background-color: rgb(114,57,234,0.8) !important;
+  background-color: rgb(114, 57, 234, 0.8) !important;
 }

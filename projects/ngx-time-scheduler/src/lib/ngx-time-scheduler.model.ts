@@ -22,7 +22,7 @@ export class Item {
   metadata?: any;
   isDraggable: boolean;
   isResizable: boolean;
-  type?: 'block' | 'charge' | 'full-charged' | 'detected';
+  type?: "block" | "charge" | "full-charged" | "detected";
 }
 
 export class Section {
@@ -30,6 +30,7 @@ export class Section {
   name: string;
   tooltip?: string;
   backgroundColor?: string;
+  data?: (string | number)[];
 
   constructor() {
     this.backgroundColor = "transparent";
@@ -57,7 +58,11 @@ export class Events {
   // ItemMovement: (item: Item, start: any, end: any) => void;
   // ItemMovementStart: (item: Item, start: any, end: any) => void;
   // ItemMovementEnd: (item: Item, start: any, end: any) => void;
-  ItemDropped: (item: Item, currContainer: CdkDropList, prevContainer: CdkDropList) => void;
+  ItemDropped: (
+    item: Item,
+    currContainer: CdkDropList,
+    prevContainer: CdkDropList
+  ) => void;
   ItemClicked: (item: Item) => void;
   ItemContextMenu: (item: Item, event: MouseEvent) => void;
   SectionClickEvent: (section: Section) => void;
