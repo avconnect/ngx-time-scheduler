@@ -49,7 +49,7 @@
   </div>
 
   <div class="time-sch-table-wrapper">
-    <table class="time-sch-table">
+    <table class="time-sch-table" [style.height]="'1px'">
       <tr
         *ngFor="
           let timeFrameHeader of header;
@@ -61,76 +61,123 @@
           class="time-sch-section text-center position-relative"
           *ngIf="i === 0"
           [rowSpan]="2"
+          [style.height]="'100%'"
         >
-          <div
-            ngbDropdown
-            *ngIf="sortItems.length || settingItems.length"
-            #settingsDropdown="ngbDropdown"
-            container="body"
-            autoClose="outside"
-            class="position-absolute start-0"
-          >
-            <i
-              ngbDropdownToggle
-              class="bi bi-three-dots-vertical dropdown-toggle"
-              [style.fontSize]="'14px'"
-              [style.cursor]="'pointer'"
-            ></i>
-            <div ngbDropdownMenu>
-              <div *ngIf="sortItems.length" ngbDropdownItem class="px-0">
-                <div ngbDropdown container="body" placement="right-top">
-                  <div
-                    ngbDropdownToggle
-                    class="px-3 d-flex justify-content-between"
-                    [style.cursor]="'pointer'"
-                    [style.fontSize]="'14px'"
-                    [style.width]="'100%'"
-                  >
-                    <span>Sort By</span>
-                    <div class="d-flex">
-                      <i
-                        class="bi bi-caret-right-fill align-self-center"
-                        [style.fontSize]="'10px'"
-                      ></i>
-                    </div>
-                  </div>
-                  <div ngbDropdownMenu>
-                    <button
-                      *ngFor="let item of sortItems"
-                      ngbDropdownItem
-                      [style.fontSize]="'14px'"
-                      (click)="
-                        events.SortItemClicked
-                          ? events.SortItemClicked(item)
-                          : false
-                      "
+          <div class="row m-0" [style.height]="'100%'">
+            <div
+              class="time-sch-section-header p-0 align-items-stretch inner-td"
+              [ngClass]="
+                headers.length ? 'col-' + 12 / (headers.length + 1) : 'col-12'
+              "
+            >
+              <div [style.height]="'100%'">
+                <div
+                  class="d-flex align-items-center"
+                  [style.height]="'inherit'"
+                >
+                  <div class="flex-grow-1">
+                    <div
+                      ngbDropdown
+                      *ngIf="sortItems.length || settingItems.length"
+                      #settingsDropdown="ngbDropdown"
+                      container="body"
+                      autoClose="outside"
+                      class="position-absolute start-0"
                     >
-                      {{ item.text }}
-                    </button>
+                      <i
+                        ngbDropdownToggle
+                        class="bi bi-three-dots-vertical dropdown-toggle"
+                        [style.fontSize]="'14px'"
+                        [style.cursor]="'pointer'"
+                      ></i>
+                      <div ngbDropdownMenu>
+                        <div
+                          *ngIf="sortItems.length"
+                          ngbDropdownItem
+                          class="px-0"
+                        >
+                          <div
+                            ngbDropdown
+                            container="body"
+                            placement="right-top"
+                          >
+                            <div
+                              ngbDropdownToggle
+                              class="px-3 d-flex justify-content-between"
+                              [style.cursor]="'pointer'"
+                              [style.fontSize]="'14px'"
+                              [style.width]="'100%'"
+                            >
+                              <span>Sort By</span>
+                              <div class="d-flex">
+                                <i
+                                  class="bi bi-caret-right-fill align-self-center"
+                                  [style.fontSize]="'10px'"
+                                ></i>
+                              </div>
+                            </div>
+                            <div ngbDropdownMenu>
+                              <button
+                                *ngFor="let item of sortItems"
+                                ngbDropdownItem
+                                [style.fontSize]="'14px'"
+                                (click)="
+                                  events.SortItemClicked
+                                    ? events.SortItemClicked(item)
+                                    : false
+                                "
+                              >
+                                {{ item.text }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          *ngFor="let item of settingItems"
+                          ngbDropdownItem
+                          class="px-0"
+                        >
+                          <span
+                            class="px-3"
+                            [style.fontSize]="'14px'"
+                            (click)="
+                              events.SettingItemClicked
+                                ? events.SettingItemClicked(item)
+                                : false;
+                              settingsDropdown.close()
+                            "
+                            [style.cursor]="'pointer'"
+                            >{{ item.text }}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+
+                    {{ text.SectionTitle }}
                   </div>
                 </div>
               </div>
-              <div
-                *ngFor="let item of settingItems"
-                ngbDropdownItem
-                class="px-0"
-              >
-                <span
-                  class="px-3"
-                  [style.fontSize]="'14px'"
-                  (click)="
-                    events.SettingItemClicked
-                      ? events.SettingItemClicked(item)
-                      : false;
-                    settingsDropdown.close()
-                  "
-                  [style.cursor]="'pointer'"
-                  >{{ item.text }}</span
-                >
-              </div>
             </div>
+
+            <ng-container *ngIf="headers.length">
+              <div
+                *ngFor="let header of headers"
+                class="time-sch-section-header p-0 align-items-stretch inner-td"
+                [ngClass]="'col-' + 12 / (headers.length + 1)"
+              >
+                <div [style.height]="'100%'">
+                  <div
+                    class="d-flex align-items-center"
+                    [style.height]="'inherit'"
+                  >
+                    <div class="flex-grow-1" [style.whiteSpace]="'pre-wrap'">
+                      {{ header }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
           </div>
-          {{ text.SectionTitle }}
         </td>
 
         <td
@@ -148,7 +195,7 @@
     </table>
 
     <div class="time-sch-content-wrap" [style.height]="maxHeight">
-      <table class="time-sch-table">
+      <table class="time-sch-table" [style.height]="'1px'">
         <tr
           *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
           [style.height]="sectionItem.minRowHeight + 'px'"
@@ -157,22 +204,65 @@
           <td
             class="time-sch-section time-sch-section-item text-center"
             #sectionTd
-            (click)="
-              events.SectionClickEvent
-                ? events.SectionClickEvent(sectionItem.section)
-                : false
-            "
-            (contextmenu)="
-              events.SectionContextMenuEvent
-                ? events.SectionContextMenuEvent(sectionItem.section, $event)
-                : false
-            "
-            [style.cursor]="events.SectionClickEvent ? 'pointer' : ''"
-            [title]="
-              sectionItem.section.tooltip ? sectionItem.section.tooltip : ''
-            "
+            [style.height]="'100%'"
           >
-            {{ sectionItem.section.name }}
+            <div class="row m-0" [style.height]="'100%'">
+              <div
+                class="time-sch-section-item-name p-0 align-items-stretch inner-td"
+                [ngClass]="
+                  sectionItem.section.data
+                    ? 'col-' + 12 / (sectionItem.section.data.length + 1)
+                    : 'col-12'
+                "
+                (click)="
+                  events.SectionClickEvent
+                    ? events.SectionClickEvent(sectionItem.section)
+                    : false
+                "
+                (contextmenu)="
+                  events.SectionContextMenuEvent
+                    ? events.SectionContextMenuEvent(
+                        sectionItem.section,
+                        $event
+                      )
+                    : false
+                "
+                [style.cursor]="events.SectionClickEvent ? 'pointer' : ''"
+                [title]="
+                  sectionItem.section.tooltip ? sectionItem.section.tooltip : ''
+                "
+              >
+                <div [style.height]="'100%'">
+                  <div
+                    class="d-flex align-items-center"
+                    [style.height]="'inherit'"
+                  >
+                    <div class="flex-grow-1">
+                      {{ sectionItem.section.name }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <ng-container *ngIf="sectionItem.section.data">
+                <div
+                  *ngFor="let el of sectionItem.section.data"
+                  [ngClass]="
+                    'col-' + 12 / (sectionItem.section.data.length + 1)
+                  "
+                  class="p-0 align-items-stretch inner-td"
+                >
+                  <div [style.height]="'100%'">
+                    <div
+                      class="d-flex align-items-center"
+                      [style.height]="'inherit'"
+                    >
+                      <div class="flex-grow-1">{{ el }}</div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
           </td>
 
           <td
