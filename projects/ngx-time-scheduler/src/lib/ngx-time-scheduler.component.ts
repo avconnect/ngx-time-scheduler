@@ -66,6 +66,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() settingItems: SettingItem[] = [];
   @Input() startHour: number = 0;
   @Input() showHeader: boolean = true;
+  @Input() headers: string[] = [];
 
   end = DateTime.now().endOf("day");
   showGotoModal = false;
@@ -406,7 +407,11 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<Section>) {
-    this.events.ItemDropped(event.item.data, event.container, event.previousContainer);
+    this.events.ItemDropped(
+      event.item.data,
+      event.container,
+      event.previousContainer
+    );
 
     // NOTE: only for items from the scheduler
     if (event.previousContainer.data instanceof Section) {
