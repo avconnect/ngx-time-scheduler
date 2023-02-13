@@ -198,13 +198,12 @@
       <table class="time-sch-table" [style.height]="'1px'">
         <tr
           *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
-          [style.height]="sectionItem.minRowHeight + 'px'"
           [style.backgroundColor]="sectionItem.section.backgroundColor"
         >
           <td
             class="time-sch-section time-sch-section-item text-center"
             #sectionTd
-            [style.height]="'100%'"
+            [style.height]="sectionItem.minRowHeight + 'px'"
           >
             <div class="row m-0" [style.height]="'100%'">
               <div
