@@ -208,16 +208,11 @@
           >
             <div class="row m-0" [style.height]="'100%'">
               <div
-                class="time-sch-section-item-name p-0 align-items-stretch inner-td"
+                class="p-0 align-items-stretch inner-td"
                 [ngClass]="
                   sectionItem.section.data
                     ? 'col-' + 12 / (sectionItem.section.data.length + 1)
                     : 'col-12'
-                "
-                (click)="
-                  events.SectionClickEvent
-                    ? events.SectionClickEvent(sectionItem.section)
-                    : false
                 "
                 (contextmenu)="
                   events.SectionContextMenuEvent
@@ -227,18 +222,59 @@
                       )
                     : false
                 "
-                [style.cursor]="events.SectionClickEvent ? 'pointer' : ''"
-                [title]="
-                  sectionItem.section.tooltip ? sectionItem.section.tooltip : ''
-                "
               >
                 <div [style.height]="'100%'">
                   <div
-                    class="d-flex align-items-center"
+                    class="d-flex align-items-center position-relative"
                     [style.height]="'inherit'"
                   >
                     <div class="flex-grow-1">
-                      {{ sectionItem.section.name }}
+                      <div class="position-absolute" [style.left]="'5px'">
+                        <i
+                          *ngIf="!!sectionItem.section.icon"
+                          class="bi"
+                          [ngClass]="
+                            sectionItem.section.icon.name +
+                            ' ' +
+                            sectionItem.section.icon.color
+                          "
+                          [ngbTooltip]="
+                            sectionItem.section.icon
+                              ? sectionItem.section.icon.tooltip
+                              : ''
+                          "
+                          [disableTooltip]="
+                            sectionItem.section.icon.tooltip ? false : true
+                          "
+                          placement="right"
+                          [tooltipClass]="sectionItem.section.icon.classes"
+                          [autoClose]="'outside'"
+                          container="body"
+                        ></i>
+                      </div>
+
+                      <span
+                        class="time-sch-section-item-name"
+                        [ngbTooltip]="
+                          sectionItem.section.tooltip
+                            ? sectionItem.section.tooltip
+                            : ''
+                        "
+                        [disableTooltip]="
+                          sectionItem.section.tooltip ? false : true
+                        "
+                        container="body"
+                        (click)="
+                          events.SectionClickEvent
+                            ? events.SectionClickEvent(sectionItem.section)
+                            : false
+                        "
+                        [style.cursor]="
+                          events.SectionClickEvent ? 'pointer' : ''
+                        "
+                        placement="right"
+                        >{{ sectionItem.section.name }}</span
+                      >
                     </div>
                   </div>
                 </div>
