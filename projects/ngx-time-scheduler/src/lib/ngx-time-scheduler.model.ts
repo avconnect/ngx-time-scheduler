@@ -29,6 +29,7 @@ export class Section {
   id: number;
   name: string;
   tooltip?: string;
+  icon?: Icon;
   backgroundColor?: string;
   data?: (string | number)[];
 
@@ -119,4 +120,11 @@ export class SortItem {
 export class SettingItem {
   text: string;
   id: string;
+}
+
+export class Icon {
+  name: string;
+  tooltip?: string;
+  classes?: string;
+  color?: string = "";
 }
