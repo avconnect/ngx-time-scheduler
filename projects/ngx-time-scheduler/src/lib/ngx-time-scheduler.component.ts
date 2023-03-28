@@ -187,6 +187,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
       {}
     );
 
+    // NOTE: call method to add space to top of conflicting block
     this.calCssTop(sortedItems);
   }
 
