@@ -171,13 +171,16 @@
 .block .progress,
 .charge .progress,
 .full-charged .progress,
-.detected .progress {
+.detected .progress,
+.original .progress {
   background-color: transparent;
   font-size: 0.85rem;
 }
 
 .block .progress-bar {
   background-color: rgba(0, 191, 255, 0.8) !important;
+  border: 3px solid #009fd4;
+  border-radius: 0.25rem;
 }
 
 .charge .progress-bar {
@@ -189,5 +192,20 @@
 }
 
 .detected .progress-bar {
-  background-color: rgb(114, 57, 234, 0.8) !important;
+  background-color: rgb(0, 146, 228, 0.8) !important;
+  border-radius: 0.25rem;
+}
+
+.detected.planned .progress-bar {
+  border: 3px solid #0075b6;
+}
+
+.detected.unplanned .progress-bar {
+  border: 3px dashed #0075b6;
+}
+
+.original .progress-bar {
+  background-color: rgba(128, 128, 128, 0.8) !important;
+  border: 3px solid grey;
+  border-radius: 0.25rem;
 }
