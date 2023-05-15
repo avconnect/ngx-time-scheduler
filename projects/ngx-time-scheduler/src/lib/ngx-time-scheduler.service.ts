@@ -7,13 +7,13 @@ import {Item, Section} from './ngx-time-scheduler.model';
 })
 export class NgxTimeSchedulerService {
 
-  public item = new Subject<Item>();
+  public item = new Subject<Item | void>();
   public itemAdd = new Subject<Item>();
   public itemId = new Subject<number>();
   public sectionAdd = new Subject<Section>();
-  public section = new Subject<Section>();
+  public section = new Subject<Section | void>();
   public sectionId = new Subject<number>();
-  public refreshView = new Subject();
+  public refreshView = new Subject<void>();
 
   constructor() { }
 
