@@ -44,6 +44,6 @@
     "luxon": "^3.0.4"
   },
   "devDependencies": {
-    "luxon": "^3.0.4"
+    "@types/luxon": "3.2.0"
   }
 }
