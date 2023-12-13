@@ -183,10 +183,6 @@
   border-radius: 0.25rem;
 }
 
-.charge .progress-bar {
-  background-color: rgba(34, 139, 34, 0.8) !important;
-}
-
 .full-charged .progress-bar {
   background-color: rgba(34, 139, 34, 0.2) !important;
 }
@@ -208,4 +204,18 @@
   background-color: rgba(128, 128, 128, 0.8) !important;
   border: 3px solid grey;
   border-radius: 0.25rem;
+}
+
+.charge.detected.unplanned .progress-bar {
+  background-color: rgba(34, 139, 34, 0.8) !important;
+  border: 3px dashed rgba(34, 139, 34, 0.8);
+}
+
+.charge.detected.planned .progress-bar {
+  background-color: rgba(34, 139, 34, 0.8) !important;
+  border: 3px solid rgba(34, 139, 34, 0.8);
+}
+
+.charge .progress-bar {
+  background-color: rgba(34, 139, 34, 0.8) !important;
 }
