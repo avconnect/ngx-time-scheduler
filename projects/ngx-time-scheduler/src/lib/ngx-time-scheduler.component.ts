@@ -78,7 +78,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   currentTimeVisibility = "visible";
   currentTimeTitle: string;
   ShowCurrentTimeHandle = null;
-  SectionLeftMeasure = "0";
+  SectionLeftMeasure = "200";
   currentPeriod: Period;
   currentPeriodMinuteDiff = 0;
   header: Header[] = [];
