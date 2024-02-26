@@ -235,13 +235,13 @@
                           : ''
                       "
                     >
-                      <span
+                      <div
                         *ngIf="
                           loadingState !== LOADING_STATE.LOADED;
                           else loaded
                         "
                         class="time-sch-section-item-name placeholder col-10 bg-secondary border rounded"
-                      ></span>
+                      ></div>
 
                       <ng-template #loaded>
                         <div class="position-absolute" [style.left]="'5px'">
@@ -354,11 +354,11 @@
                   class="placeholder-glow"
                   [style.height]="minRowHeight + 'px'"
                 >
-                  <span
+                  <div
                     class="placeholder col-12 bg-secondary border rounded"
                     [style.width]="'100%'"
                     [style.height]="minRowHeight + 'px'"
-                  ></span>
+                  ></div>
                 </div>
               </div>
             </div>
