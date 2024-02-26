@@ -1,4 +1,4 @@
-import { Section } from "ngx-time-scheduler/public_api";
+import { Section } from "./ngx-time-scheduler.model";
 
 export const DEFAULT_SECTIONS: Section[] = [
   {

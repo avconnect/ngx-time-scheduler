@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { Item } from "ngx-time-scheduler/public_api";
+import { Item } from "./ngx-time-scheduler.model";
 
 export function getDefaultItems(datetime: DateTime): Item[] {
   return [
