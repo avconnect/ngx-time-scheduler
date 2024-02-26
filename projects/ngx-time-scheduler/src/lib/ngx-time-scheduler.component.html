@@ -197,7 +197,7 @@
     <div class="time-sch-content-wrap" [style.height]="maxHeight">
       <table class="time-sch-table" [style.height]="'1px'">
         <tr
-          *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
+          *ngFor="let sectionItem of SECTION_ITEMS; trackBy: trackByFn"
           [style.backgroundColor]="sectionItem.section.backgroundColor"
         >
           <td
@@ -227,53 +227,70 @@
                     class="d-flex align-items-center position-relative"
                     [style.height]="'inherit'"
                   >
-                    <div class="flex-grow-1">
-                      <div class="position-absolute" [style.left]="'5px'">
-                        <i
-                          *ngIf="!!sectionItem.section.icon"
-                          class="bi"
-                          [ngClass]="
-                            sectionItem.section.icon.name +
-                            ' ' +
-                            sectionItem.section.icon.color
-                          "
+                    <div
+                      class="flex-grow-1"
+                      [ngClass]="
+                        loadingState !== LOADING_STATE.LOADED
+                          ? 'placeholder-glow'
+                          : ''
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          loadingState !== LOADING_STATE.LOADED;
+                          else loaded
+                        "
+                        class="time-sch-section-item-name placeholder col-10 bg-secondary border rounded"
+                      ></span>
+
+                      <ng-template #loaded>
+                        <div class="position-absolute" [style.left]="'5px'">
+                          <i
+                            *ngIf="!!sectionItem.section.icon"
+                            class="bi"
+                            [ngClass]="
+                              sectionItem.section.icon.name +
+                              ' ' +
+                              sectionItem.section.icon.color
+                            "
+                            [ngbTooltip]="
+                              sectionItem.section.icon
+                                ? sectionItem.section.icon.tooltip
+                                : ''
+                            "
+                            [disableTooltip]="
+                              sectionItem.section.icon.tooltip ? false : true
+                            "
+                            placement="right"
+                            [tooltipClass]="sectionItem.section.icon.classes"
+                            [autoClose]="'outside'"
+                            container="body"
+                          ></i>
+                        </div>
+
+                        <span
+                          class="time-sch-section-item-name"
                           [ngbTooltip]="
-                            sectionItem.section.icon
-                              ? sectionItem.section.icon.tooltip
+                            sectionItem.section.tooltip
+                              ? sectionItem.section.tooltip
                               : ''
                           "
                           [disableTooltip]="
-                            sectionItem.section.icon.tooltip ? false : true
+                            sectionItem.section.tooltip ? false : true
+                          "
+                          container="body"
+                          (click)="
+                            events.SectionClickEvent
+                              ? events.SectionClickEvent(sectionItem.section)
+                              : false
+                          "
+                          [style.cursor]="
+                            events.SectionClickEvent ? 'pointer' : ''
                           "
                           placement="right"
-                          [tooltipClass]="sectionItem.section.icon.classes"
-                          [autoClose]="'outside'"
-                          container="body"
-                        ></i>
-                      </div>
-
-                      <span
-                        class="time-sch-section-item-name"
-                        [ngbTooltip]="
-                          sectionItem.section.tooltip
-                            ? sectionItem.section.tooltip
-                            : ''
-                        "
-                        [disableTooltip]="
-                          sectionItem.section.tooltip ? false : true
-                        "
-                        container="body"
-                        (click)="
-                          events.SectionClickEvent
-                            ? events.SectionClickEvent(sectionItem.section)
-                            : false
-                        "
-                        [style.cursor]="
-                          events.SectionClickEvent ? 'pointer' : ''
-                        "
-                        placement="right"
-                        >{{ sectionItem.section.name }}</span
-                      >
+                          >{{ sectionItem.section.name }}</span
+                        >
+                      </ng-template>
                     </div>
                   </div>
                 </div>
@@ -318,112 +335,140 @@
           cdkDropListSortingDisabled
           [cdkDropListData]="sectionItem.section"
           (cdkDropListDropped)="drop($event)"
-          *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
+          *ngFor="let sectionItem of SECTION_ITEMS; trackBy: trackByFn"
           [style.height]="sectionItem.minRowHeight + 'px'"
         >
-          <div
-            class="time-sch-item"
-            cdkDrag
-            cdkDragLockAxis="y"
-            cdkDragBoundary=".time-sch-section-wrapper"
-            [cdkDragData]="itemMeta.item"
-            [cdkDragDisabled]="
-              allowDragging === false
-                ? true
-                : allowDragging && !itemMeta.item.isDraggable
-                ? true
-                : false
-            "
-            *ngFor="let itemMeta of sectionItem.itemMetas"
-            [ngClass]="itemMeta.item.classes"
-            (click)="
-              events.ItemClicked ? events.ItemClicked(itemMeta.item) : false
-            "
-            (contextmenu)="
-              events.ItemContextMenu
-                ? events.ItemContextMenu(itemMeta.item, $event)
-                : false
-            "
-            [style.height]="minRowHeight + 'px'"
-            [style.top]="itemMeta.cssTop + 'px'"
-            [style.left]="itemMeta.cssLeft + '%'"
-            [style.width]="itemMeta.cssWidth + '%'"
+          <ng-container
+            *ngIf="loadingState !== LOADING_STATE.LOADED; else loaded"
           >
             <div
-              class="item-drag-placeholder"
-              *cdkDragPlaceholder
-              [style.height]="minRowHeight - 6 + 'px'"
+              class="time-sch-item"
+              *ngFor="let itemMeta of sectionItem.itemMetas"
+              [style.height]="minRowHeight + 'px'"
+              [style.top]="itemMeta.cssTop + 'px'"
               [style.left]="itemMeta.cssLeft + '%'"
-              [style.width]="'calc(' + itemMeta.cssWidth + '% - 6px)'"
-            ></div>
-
-            <div
-              class="time-sch-item-start"
-              cdkDragLockAxis="x"
-              cdkDrag
-              [cdkDragDisabled]="
-                allowDragging === false
-                  ? true
-                  : allowDragging && !itemMeta.item.isResizable
-                  ? true
-                  : false
-              "
-              (cdkDragStarted)="onDragStart(itemMeta)"
-              (cdkDragReleased)="onDragReleased()"
-              (cdkDragMoved)="
-                resize(sectionContainers, itemMeta, $event, 'left')
-              "
-              [style.zIndex]="100"
-              [style.cursor]="
-                allowDragging && itemMeta.item.isResizable
-                  ? 'ew-resize'
-                  : 'auto'
-              "
-            ></div>
-
-            <div
-              class="time-sch-item-content"
-              [title]="itemMeta.item.tooltip ? itemMeta.item.tooltip : ''"
+              [style.width]="itemMeta.cssWidth + '%'"
             >
-              <ngb-progressbar
-                [max]="100"
-                [value]="100"
-                [height]="minRowHeight + 'px'"
-                class="itemMeta.item.type ? itemMeta.item.type : ''"
-              >
-                <span
-                  [style.textAlign]="'start'"
-                  [style.padding]="'4px 0 4px 6px'"
+              <div class="time-sch-item-content">
+                <div
+                  class="placeholder-glow"
+                  [style.height]="minRowHeight + 'px'"
                 >
-                  {{ itemMeta.item.name }}
-                </span>
-              </ngb-progressbar>
+                  <span
+                    class="placeholder col-12 bg-secondary border rounded"
+                    [style.width]="'100%'"
+                    [style.height]="minRowHeight + 'px'"
+                  ></span>
+                </div>
+              </div>
             </div>
+          </ng-container>
 
+          <ng-template #loaded>
             <div
-              class="time-sch-item-end"
-              cdkDragLockAxis="x"
+              class="time-sch-item"
               cdkDrag
+              cdkDragLockAxis="y"
+              cdkDragBoundary=".time-sch-section-wrapper"
+              [cdkDragData]="itemMeta.item"
               [cdkDragDisabled]="
                 allowDragging === false
                   ? true
-                  : allowDragging && !itemMeta.item.isResizable
+                  : allowDragging && !itemMeta.item.isDraggable
                   ? true
                   : false
               "
-              (cdkDragStarted)="onDragStart(itemMeta)"
-              (cdkDragReleased)="onDragReleased()"
-              (cdkDragMoved)="
-                resize(sectionContainers, itemMeta, $event, 'right')
+              *ngFor="let itemMeta of sectionItem.itemMetas"
+              [ngClass]="itemMeta.item.classes"
+              (click)="
+                events.ItemClicked ? events.ItemClicked(itemMeta.item) : false
               "
-              [style.zIndex]="100"
-              [style.cursor]="
-                allowDragging && itemMeta.item.isResizable
-                  ? 'ew-resize'
-                  : 'auto'
+              (contextmenu)="
+                events.ItemContextMenu
+                  ? events.ItemContextMenu(itemMeta.item, $event)
+                  : false
               "
-            ></div>
-          </div>
+              [style.height]="minRowHeight + 'px'"
+              [style.top]="itemMeta.cssTop + 'px'"
+              [style.left]="itemMeta.cssLeft + '%'"
+              [style.width]="itemMeta.cssWidth + '%'"
+            >
+              <div
+                class="item-drag-placeholder"
+                *cdkDragPlaceholder
+                [style.height]="minRowHeight - 6 + 'px'"
+                [style.left]="itemMeta.cssLeft + '%'"
+                [style.width]="'calc(' + itemMeta.cssWidth + '% - 6px)'"
+              ></div>
+
+              <div
+                class="time-sch-item-start"
+                cdkDragLockAxis="x"
+                cdkDrag
+                [cdkDragDisabled]="
+                  allowDragging === false
+                    ? true
+                    : allowDragging && !itemMeta.item.isResizable
+                    ? true
+                    : false
+                "
+                (cdkDragStarted)="onDragStart(itemMeta)"
+                (cdkDragReleased)="onDragReleased()"
+                (cdkDragMoved)="
+                  resize(sectionContainers, itemMeta, $event, 'left')
+                "
+                [style.zIndex]="100"
+                [style.cursor]="
+                  allowDragging && itemMeta.item.isResizable
+                    ? 'ew-resize'
+                    : 'auto'
+                "
+              ></div>
+
+              <div
+                class="time-sch-item-content"
+                [title]="itemMeta.item.tooltip ? itemMeta.item.tooltip : ''"
+              >
+                <ngb-progressbar
+                  [max]="100"
+                  [value]="100"
+                  [height]="minRowHeight + 'px'"
+                  class="itemMeta.item.type ? itemMeta.item.type : ''"
+                >
+                  <span
+                    [style.textAlign]="'start'"
+                    [style.padding]="'4px 0 4px 6px'"
+                  >
+                    {{ itemMeta.item.name }}
+                  </span>
+                </ngb-progressbar>
+              </div>
+
+              <div
+                class="time-sch-item-end"
+                cdkDragLockAxis="x"
+                cdkDrag
+                [cdkDragDisabled]="
+                  allowDragging === false
+                    ? true
+                    : allowDragging && !itemMeta.item.isResizable
+                    ? true
+                    : false
+                "
+                (cdkDragStarted)="onDragStart(itemMeta)"
+                (cdkDragReleased)="onDragReleased()"
+                (cdkDragMoved)="
+                  resize(sectionContainers, itemMeta, $event, 'right')
+                "
+                [style.zIndex]="100"
+                [style.cursor]="
+                  allowDragging && itemMeta.item.isResizable
+                    ? 'ew-resize'
+                    : 'auto'
+                "
+              ></div>
+            </div>
+          </ng-template>
         </div>
 
         <div

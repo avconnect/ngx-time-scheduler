@@ -27,6 +27,9 @@ import {
 } from "./ngx-time-scheduler.model";
 import { DateTime, Info, Settings } from "luxon";
 import { Subscription } from "rxjs";
+import { LoadingState } from "./ngx-time-scheduler.enums";
+import { DEFAULT_SECTIONS } from "./ngx-time-scheduler.constants";
+import { getDefaultItems } from "./ngx-time-scheduler.utils";
 
 @Component({
   selector: "ngx-ts[items][periods][sections]",
@@ -54,7 +57,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() minRowHeight = 40;
   @Input() maxHeight: string = null;
   @Input() text = new Text();
-  @Input() items: Item[];
+  @Input() items: Item[] = [];
   @Input() sections: Section[];
   @Input() periods: Period[];
   @Input() events: Events = new Events();
@@ -67,6 +70,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() startHour: number = 0;
   @Input() showHeader: boolean = true;
   @Input() headers: string[] = [];
+  @Input() loadingState: LoadingState = LoadingState.NOT_LOADED;
 
   end = DateTime.now().endOf("day");
   showGotoModal = false;
@@ -77,12 +81,22 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   SectionLeftMeasure = "0";
   currentPeriod: Period;
   currentPeriodMinuteDiff = 0;
-  header: Header[];
-  sectionItems: SectionItem[];
+  header: Header[] = [];
+  sectionItems: SectionItem[] = [];
   subscription = new Subscription();
   formattedHeader: string;
   activePeriod: number = 0;
   draggedItemCache: ItemMeta;
+  public LOADING_STATE = LoadingState;
+  public DEFAULT_ITEMS: Item[] = [];
+  public DEFAULT_SECTION_ITEMS: SectionItem[] = [];
+  public DEFAULT_SECTIONS = DEFAULT_SECTIONS;
+
+  public get SECTION_ITEMS(): SectionItem[] {
+    if (this.loadingState !== LoadingState.LOADED)
+      return this.DEFAULT_SECTION_ITEMS;
+    return this.sectionItems;
+  }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -94,6 +108,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setActivePeriodButton(this.activePeriod);
     this.setTimezone();
+    this.DEFAULT_ITEMS = getDefaultItems(this.start);
     this.setStartHour();
     this.setSectionsInSectionItems();
     this.changePeriod(this.periods[0], false);
@@ -140,6 +155,14 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   setSectionsInSectionItems() {
+    this.DEFAULT_SECTION_ITEMS = new Array<SectionItem>();
+    DEFAULT_SECTIONS.forEach((section) => {
+      const perSectionItem = new SectionItem();
+      perSectionItem.section = section;
+      perSectionItem.minRowHeight = this.minRowHeight;
+      this.DEFAULT_SECTION_ITEMS.push(perSectionItem);
+    });
+
     this.sectionItems = new Array<SectionItem>();
     this.sections.forEach((section) => {
       const perSectionItem = new SectionItem();
@@ -150,6 +173,46 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   }
 
   setItemsInSectionItems() {
+    const _itemMetas = new Array<ItemMeta>();
+
+    this.DEFAULT_SECTION_ITEMS.forEach((ele) => {
+      ele.itemMetas = new Array<ItemMeta>();
+      ele.minRowHeight = this.minRowHeight;
+
+      this.DEFAULT_ITEMS.filter((i) => {
+        let itemMeta = new ItemMeta();
+
+        if (i.sectionID === ele.section.id) {
+          itemMeta.item = i;
+          if (
+            itemMeta.item.start <= this.end &&
+            itemMeta.item.end >= this.start
+          ) {
+            itemMeta = this.itemMetaCal(itemMeta);
+            ele.itemMetas.push(itemMeta);
+            _itemMetas.push(itemMeta);
+          }
+        }
+      });
+    });
+
+    const sortedDefaultItems = _itemMetas.reduce(
+      (sortItems: {}, itemMeta: ItemMeta) => {
+        const index = this.DEFAULT_SECTION_ITEMS.findIndex(
+          (sectionItem) => sectionItem.section.id === itemMeta.item.sectionID
+        );
+        if (!sortItems[index]) {
+          sortItems[index] = [];
+        }
+        sortItems[index].push(itemMeta);
+        return sortItems;
+      },
+      {}
+    );
+
+    // NOTE: call method to add space to top of conflicting block
+    this.calCssTop(sortedDefaultItems);
+
     const itemMetas = new Array<ItemMeta>();
 
     this.sectionItems.forEach((ele) => {
