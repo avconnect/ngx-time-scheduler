@@ -31,7 +31,7 @@
   "dependencies": {
     "@angular-eslint/schematics": "^15.2.1",
     "@angular/animations": "15.2.10",
-    "@angular/cdk": "^14.2.7",
+    "@angular/cdk": "^15.2.9",
     "@angular/common": "15.2.10",
     "@angular/compiler": "15.2.10",
     "@angular/core": "15.2.10",
@@ -51,7 +51,7 @@
     "@angular/compiler-cli": "15.2.10",
     "@angular/language-service": "15.2.10",
     "@angular/localize": "15.2.10",
-    "@ng-bootstrap/ng-bootstrap": "^13.1.1",
+    "@ng-bootstrap/ng-bootstrap": "^14.2.0",
     "@types/jasmine": "~3.5.10",
     "@types/jasminewd2": "~2.0.3",
     "@types/luxon": "3.2.0",
