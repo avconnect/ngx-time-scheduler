@@ -29,7 +29,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-eslint/schematics": "^14.4.0",
+    "@angular-eslint/schematics": "^15.2.1",
     "@angular/animations": "14.3.0",
     "@angular/cdk": "^14.2.7",
     "@angular/common": "14.3.0",
