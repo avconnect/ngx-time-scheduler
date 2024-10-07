@@ -31,7 +31,7 @@
     "@angular/cdk": "^14.2.7",
     "@angular/localize": "14.3.0",
     "@ng-bootstrap/ng-bootstrap": "^13.1.1",
-    "bootstrap": "5.2",
+    "bootstrap": "^5.3.3",
     "bootstrap-icons": "1.8.1",
     "luxon": "^3.0.4"
   },
@@ -39,7 +39,7 @@
     "@angular/cdk": "^14.2.7",
     "@angular/localize": "14.3.0",
     "@ng-bootstrap/ng-bootstrap": "^13.1.1",
-    "bootstrap": "5.2",
+    "bootstrap": "^5.3.3",
     "bootstrap-icons": "1.8.1",
     "luxon": "^3.0.4"
   },
