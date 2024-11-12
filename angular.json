@@ -177,7 +177,6 @@
       }
     }
   },
-  "defaultProject": "TimeScheduler",
   "cli": {
     "analytics": false
   }
